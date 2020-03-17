@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <h1 style="text-align: center;">WEATHER CENTER</h1>
+    <div class="container" style="margin: 0px;">
+      <div class="row">
+        <div class="col-3" id="city-sidebar">
+            <div>form input city</div>
+            <div>city selection list</div>
+        </div>
+        <div class="col-9" id="weather-dashboard">
+          <div class="container"id="current-weather">
+            <div class="city-date"></div>
+            <div class="temp"></div>
+            <div class="wind"></div>
+            <div class="uv"></div>
+            <!-- <div class="row">
+                <p id="city-date">Today</p>
+            </div>
+            <div class="row">
+                <p>Temperature: <span id="temp"></span></p>
+            </div>
+            <div class="row">
+                <p>Humidity: <span id="humidity"></span></p>
+            </div>
+            <div class="row">
+                <p>Wind Speed: <span id="wind"></span></p>
+            </div>
+            <div class="row">
+                <p>UV Index: <span id="uv"></span></p>
+            </div> -->
+          </div>
+          <div class="container" id="forecast">
+            <div class="row">
+                <p>5-Day Forecast:</p>
+            </div>
+            <div class="row" id="weather-cards">
+                <card>tomorrow</card>
+          </div>
+            </div>
+          </div>  
+        </div>
+     </div>  
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+      "q=Bujumbura,Burundi&appid=" + "2e81bb007230992d08ea9d996937aeda"
+        
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+        .then(function(response){
+            console.log(response);
+            
+        })
+        
+
+// GIVEN a weather dashboard with form inputs
+// WHEN I search for a city
+// THEN I am presented with current and future conditions for that city and that city is added to the search history
+// WHEN I view current weather conditions for that city
+// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+// WHEN I view the UV index
+// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+// WHEN I view future weather conditions for that city
+// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
+// WHEN I click on a city in the search history
+// THEN I am again presented with current and future conditions for that city
+// WHEN I open the weather dashboard
+// THEN I am presented with the last searched city forecast
+
+
+          // icon assets http://openweathermap.org/img/wn/09d@2x.png;
+        // getCityWeather ( cityName)
+            // creat urlString: api base url + endpoint + cityname
+            // make a ajax to weather api with city name
+            // return results
+        // takeWeatherResultsAndBuildHTML ( weather obj)
+            // build html elements from results
+            var $img = $("<img>").attr({alt: weatherResults.weather.main +" icon", src:"http://openweathermap.org/img/wn/" + weatherResults.weather.icon + "@2x.png"})
+        // read local storage for city buttons
+        // click events:
+            // add click event to form city input
+                // search weather for that city (getCityWeather("city-name"))
+                // push city name to local storage (history: [array-of cities])
+                // display city weather (displayWeather(weatherObj))
+            // add click event to city selection input
+                // search weather for that city (getCityWeather("city-name"))
+                // push city name to local storage (history: [array-of cities])
+                // display city weather (displayWeather(weatherObj))
+        //// execution
+        // CALL: read local storage()
+
+        // icon weather chart https://openweathermap.org/weather-conditions
+
+
+    </script>
+</body>
+</html>

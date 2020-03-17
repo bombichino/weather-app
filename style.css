@@ -1,0 +1,24 @@
+h1 {
+    background-color: rgb(34, 33, 33);
+    color: honeydew;
+}
+
+#city-sidebar {
+    background-color: rgb(231, 232, 252);
+}
+
+#city-date{
+    font-weight: strong;
+    font-size: large;
+}
+
+#current-weather{
+    border-width: 1;
+    border-color: rgba(0, 0, 0, 0.507);
+    border-style: solid;
+    height: 250;
+}
+
+#forecast {
+    margin: none;
+}
