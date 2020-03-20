@@ -63,7 +63,9 @@
                 <div class="card bg-primary text-white text-center p-3 bump" >
                     <blockquote class="blockquote mb-0">
                         <div class="date1 forecastInfo">Forecast:</div>
-                        <div id="icon1"></div>
+                        <div>
+                            <img src="" id="icon1">
+                        </div>
                         <div class="temp1 forecastInfo"></div>
                         <div class="humidity1 forecastInfo"></div>
                     </blockquote>
@@ -71,7 +73,9 @@
                 <div class="card bg-primary text-white text-center p-3 bump">
                     <blockquote class="blockquote mb-0">
                         <div class="date2 forecastInfo">Forecast:</div>
-                        <div id="icon2"></div>
+                        <div>
+                            <img src="" id="icon2">
+                        </div>
                         <div class="temp2 forecastInfo"></div>
                         <div class="humidity2 forecastInfo"></div>
                     </blockquote>
@@ -79,7 +83,9 @@
                 <div class="card bg-primary text-white text-center p-3 bump">
                     <blockquote class="blockquote mb-0">
                         <div class="date3 forecastInfo">Forecast:</div>
-                        <div id="icon3"></div>
+                        <div>
+                            <img src="" id="icon3">
+                        </div>
                         <div class="temp3 forecastInfo"></div>
                         <div class="humidity3 forecastInfo"></div>
                     </blockquote>
@@ -87,7 +93,9 @@
                 <div class="card bg-primary text-white text-center p-3 bump">
                     <blockquote class="blockquote mb-0">
                         <div class="date4 forecastInfo">Forecast:</div>
-                        <div id="icon4"></div>
+                        <div>
+                            <img src="" id="icon4">
+                        </div>
                         <div class="temp4 forecastInfo"></div>
                         <div class="humidity4 forecastInfo"></div>
                     </blockquote>
@@ -95,7 +103,9 @@
                 <div class="card bg-primary text-white text-center p-3">
                     <blockquote class="blockquote mb-0">
                         <div class="date5 forecastInfo">Forecast:</div>
-                        <div id="icon5"></div>
+                        <div>
+                            <img src="" id="icon5">
+                        </div>
                         <div class="temp5 forecastInfo"></div>
                         <div class="humidity5 forecastInfo"></div>
                     </blockquote>
@@ -165,45 +175,40 @@
                 console.log(response);
                 var date1 = moment().add(1, 'days').format("l");
                 $(".date1").text(date1);
-                var img1 = $("<img>")
+                var img1 = $("#icon1")
                 img1.attr('src', "http://openweathermap.org/img/wn/" + response.list[6].weather[0].icon + ".png");
-                img1.appendTo("#icon1");
                 var tempFdeg1 = (response.list[6].main.temp - 273.15) * 1.80 + 32;
                 $(".temp1").text("Temp: " + tempFdeg1.toFixed(1) + "°F");
                 $(".humidity1").text("Humidity: " + response.list[6].main.humidity + "%");
 
                 var date2 = moment().add(2, 'days').format("l");
                 $(".date2").text(date2);
-                var img2 = $("<img>")
+                var img2 = $("#icon2")
                 img2.attr('src', "http://openweathermap.org/img/wn/" + response.list[14].weather[0].icon + ".png");
-                img2.appendTo("#icon2");
                 var tempFdeg2 = (response.list[14].main.temp - 273.15) * 1.80 + 32;
                 $(".temp2").text("Temp: " + tempFdeg2.toFixed(1) + "°F");
                 $(".humidity2").text("Humidity: " + response.list[14].main.humidity + "%");
 
                 var date3 = moment().add(3, 'days').format("l");
                 $(".date3").text(date3);
-                var img3 = $("<img>")
+                var img3 = $("#icon3")
                 img3.attr('src', "http://openweathermap.org/img/wn/" + response.list[22].weather[0].icon + ".png");
-                img3.appendTo("#icon3");
                 var tempFdeg3 = (response.list[22].main.temp - 273.15) * 1.80 + 32;
                 $(".temp3").text("Temp: " + tempFdeg3.toFixed(1) + "°F");
                 $(".humidity3").text("Humidity: " + response.list[22].main.humidity + "%");
 
                 var date4 = moment().add(4, 'days').format("l");
                 $(".date4").text(date4);
-                var img4 = $("<img>")
+                var img4 = $("#icon4")
                 img4.attr('src', "http://openweathermap.org/img/wn/" + response.list[30].weather[0].icon + ".png");
-                img4.appendTo("#icon4");
                 var tempFdeg4 = (response.list[30].main.temp - 273.15) * 1.80 + 32;
                 $(".temp4").text("Temp: " + tempFdeg4.toFixed(1) + "°F");
                 $(".humidity4").text("Humidity: " + response.list[30].main.humidity + "%");
 
                 var date5 = moment().add(5, 'days').format("l");
                 $(".date5").text(date5);
-                var img5 = $("<img>")
+                var img5 = $("#icon5")
                 img5.attr('src', "http://openweathermap.org/img/wn/" + response.list[38].weather[0].icon + ".png");
-                img5.appendTo("#icon5");
                 var tempFdeg5 = (response.list[38].main.temp - 273.15) * 1.80 + 32;
                 $(".temp5").text("Temp: " + tempFdeg5.toFixed(1) + "°F");
                 $(".humidity5").text("Humidity: " + response.list[38].main.humidity + "%");
@@ -217,33 +222,6 @@
             localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
         }
         
-        function clearInfo(){
-            $(".city").innerHTML = "";
-            $(".temp").innerHTML = "";
-            $(".humidity").innerHTML = "";
-            $(".wind").innerHTML = "";
-            $(".uv").innerHTML = "";
-            $(".date1").innerHTML = "";
-            $("#icon1").innerHTML = "";
-            $(".temp1").innerHTML = "";
-            $(".humidity1").innerHTML = "";
-            $(".date2").innerHTML = "";
-            $("#icon2").innerHTML = "";
-            $(".temp2").innerHTML = "";
-            $(".humidity2").innerHTML = "";
-            $(".date3").innerHTML = "";
-            $("#icon3").innerHTML = "";
-            $(".temp3").innerHTML = "";
-            $(".humidity3").innerHTML = "";
-            $(".date4").innerHTML = "";
-            $("#icon4").innerHTML = "";
-            $(".temp4").innerHTML = "";
-            $(".humidity4").innerHTML = "";
-            $(".date5").innerHTML = "";
-            $("#icon5").innerHTML = "";
-            $(".temp5").innerHTML = "";
-            $(".humidity5").innerHTML = "";
-        }
 
         function renderHistory(){
             var storedCities = JSON.parse(localStorage.getItem("cityHistory"));
@@ -262,8 +240,9 @@
                     button.setAttribute("id", "previousCity");
                     listOfCities.appendChild(button);
                     button.addEventListener("click", function(){
-                        console.log("hi");
-                        clearInfo();
+                        console.log(this.textContent);
+                        $("#your-city").val(this.textContent);
+                        // clearInfo();
                         getMainWeather();
                         getForecast();
                     })
@@ -284,59 +263,6 @@
                 getForecast();
             });
          
-        // })
-        
-        // $("list-group-item").click(function(){
-        //     event.preventDefault();
-        //     console.log("hi");
-            
-        // });
-
-
-
-
-
-
-
-// GIVEN a weather dashboard with form inputs
-// WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
-// WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-// WHEN I view the UV index
-// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-// WHEN I view future weather conditions for that city
-// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
-// WHEN I click on a city in the search history
-// THEN I am again presented with current and future conditions for that city
-// WHEN I open the weather dashboard
-// THEN I am presented with the last searched city forecast
-
-
-          // icon assets http://openweathermap.org/img/wn/09d@2x.png;
-        // getCityWeather ( cityName)
-            // creat urlString: api base url + endpoint + cityname
-            // make a ajax to weather api with city name
-            // return results
-        // takeWeatherResultsAndBuildHTML ( weather obj)
-            // build html elements from results
-            // var $img = $("<img>").attr({alt: weatherResults.weather.main +" icon", src:"http://openweathermap.org/img/wn/" + weatherResults.weather.icon + "@2x.png"})
-        // read local storage for city buttons
-        // click events:
-            // add click event to form city input
-                // search weather for that city (getCityWeather("city-name"))
-                // push city name to local storage (history: [array-of cities])
-                // display city weather (displayWeather(weatherObj))
-            // add click event to city selection input
-                // search weather for that city (getCityWeather("city-name"))
-                // push city name to local storage (history: [array-of cities])
-                // display city weather (displayWeather(weatherObj))
-        //// execution
-        // CALL: read local storage()
-
-        // icon weather chart https://openweathermap.org/weather-conditions
-
-
     </script>
 </body>
 </html>
