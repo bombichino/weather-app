@@ -62,42 +62,42 @@
             <div class="row" id="weather-cards">
                 <div class="card bg-primary text-white text-center p-3 bump" >
                     <blockquote class="blockquote mb-0">
-                        <div class="date1 forecastInfo">date</div>
-                        <div class="icon1">icon</div>
-                        <div class="temp1 forecastInfo">temp</div>
-                        <div class="humidity1 forecastInfo">humidity</div>
+                        <div class="date1 forecastInfo">Forecast:</div>
+                        <div id="icon1"></div>
+                        <div class="temp1 forecastInfo"></div>
+                        <div class="humidity1 forecastInfo"></div>
                     </blockquote>
                 </div>
                 <div class="card bg-primary text-white text-center p-3 bump">
                     <blockquote class="blockquote mb-0">
-                        <div class="date2 forecastInfo">date</div>
-                        <div class="icon2">icon</div>
-                        <div class="temp2 forecastInfo">temp</div>
-                        <div class="humidity2 forecastInfo">humidity</div>
+                        <div class="date2 forecastInfo">Forecast:</div>
+                        <div id="icon2"></div>
+                        <div class="temp2 forecastInfo"></div>
+                        <div class="humidity2 forecastInfo"></div>
                     </blockquote>
                 </div>
                 <div class="card bg-primary text-white text-center p-3 bump">
                     <blockquote class="blockquote mb-0">
-                        <div class="date3 forecastInfo">date</div>
-                        <div class="icon3">icon</div>
-                        <div class="temp3 forecastInfo">temp</div>
-                        <div class="humidity3 forecastInfo">humidity</div>
+                        <div class="date3 forecastInfo">Forecast:</div>
+                        <div id="icon3"></div>
+                        <div class="temp3 forecastInfo"></div>
+                        <div class="humidity3 forecastInfo"></div>
                     </blockquote>
                 </div>
                 <div class="card bg-primary text-white text-center p-3 bump">
                     <blockquote class="blockquote mb-0">
-                        <div class="date4 forecastInfo">date</div>
-                        <div class="icon4">icon</div>
-                        <div class="temp4 forecastInfo">temp</div>
-                        <div class="humidity4 forecastInfo">humidity</div>
+                        <div class="date4 forecastInfo">Forecast:</div>
+                        <div id="icon4"></div>
+                        <div class="temp4 forecastInfo"></div>
+                        <div class="humidity4 forecastInfo"></div>
                     </blockquote>
                 </div>
                 <div class="card bg-primary text-white text-center p-3">
                     <blockquote class="blockquote mb-0">
-                        <div class="date5 forecastInfo">date</div>
-                        <div class="icon5">icon</div>
-                        <div class="temp5 forecastInfo">temp</div>
-                        <div class="humidity5 forecastInfo">humidity</div>
+                        <div class="date5 forecastInfo">Forecast:</div>
+                        <div id="icon5"></div>
+                        <div class="temp5 forecastInfo"></div>
+                        <div class="humidity5 forecastInfo"></div>
                     </blockquote>
                 </div>
             </div>
@@ -125,10 +125,32 @@
                 $(".temp").text("Temperature: " + tempFdeg.toFixed(1) + "°F");
                 $(".humidity").text("Humidity: " + response.main.humidity + "%");
                 $(".wind").text("Wind Speed: "+ response.wind.speed + " MPH");
-                // uv index
-
+                    // uv index ajax call
+                    var lon = response.coord.lon;
+                    var lat = response.coord.lat;
+                    var queryURLuv = "http://api.openweathermap.org/data/2.5/uvi?appid=2e81bb007230992d08ea9d996937aeda&lat=" + lat + "&lon=" + lon;
+                    $.ajax({
+                    url: queryURLuv,
+                    method: "GET" 
+                    })
+                    .then(function(uvResponse){
+                    console.log(uvResponse);
+                    console.log(uvResponse.value)
+                $(".uv").text("UV Index: " + uvResponse.value);
+                var uvElement = $(".uv");
+                if (uvResponse.value < 3){
+                    uvElement.setAttribute("style", "background-color: green");
+                }
+                else if (uvResponse.value > 3 && uvResponse.value < 6){
+                    uvElement.setAttribute("style", "background-color: yellow");
+                }
+                else {
+                    uvElement.setAttribute("style", "background-color: red");
+                }
+                    });
                 });
             }
+
         function getForecast(){
             var yourCity = $("#your-city").val();
             var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + yourCity + "&appid=2e81bb007230992d08ea9d996937aeda";
@@ -143,35 +165,45 @@
                 console.log(response);
                 var date1 = moment().add(1, 'days').format("l");
                 $(".date1").text(date1);
-                // $(".icon1")
+                var img1 = $("<img>")
+                img1.attr('src', "http://openweathermap.org/img/wn/" + response.list[6].weather[0].icon + ".png");
+                img1.appendTo("#icon1");
                 var tempFdeg1 = (response.list[6].main.temp - 273.15) * 1.80 + 32;
                 $(".temp1").text("Temp: " + tempFdeg1.toFixed(1) + "°F");
                 $(".humidity1").text("Humidity: " + response.list[6].main.humidity + "%");
 
                 var date2 = moment().add(2, 'days').format("l");
                 $(".date2").text(date2);
-                // $(".icon2")
+                var img2 = $("<img>")
+                img2.attr('src', "http://openweathermap.org/img/wn/" + response.list[14].weather[0].icon + ".png");
+                img2.appendTo("#icon2");
                 var tempFdeg2 = (response.list[14].main.temp - 273.15) * 1.80 + 32;
                 $(".temp2").text("Temp: " + tempFdeg2.toFixed(1) + "°F");
                 $(".humidity2").text("Humidity: " + response.list[14].main.humidity + "%");
 
                 var date3 = moment().add(3, 'days').format("l");
                 $(".date3").text(date3);
-                // $(".icon3")
+                var img3 = $("<img>")
+                img3.attr('src', "http://openweathermap.org/img/wn/" + response.list[22].weather[0].icon + ".png");
+                img3.appendTo("#icon3");
                 var tempFdeg3 = (response.list[22].main.temp - 273.15) * 1.80 + 32;
                 $(".temp3").text("Temp: " + tempFdeg3.toFixed(1) + "°F");
                 $(".humidity3").text("Humidity: " + response.list[22].main.humidity + "%");
 
                 var date4 = moment().add(4, 'days').format("l");
                 $(".date4").text(date4);
-                // $(".icon4")
+                var img4 = $("<img>")
+                img4.attr('src', "http://openweathermap.org/img/wn/" + response.list[30].weather[0].icon + ".png");
+                img4.appendTo("#icon4");
                 var tempFdeg4 = (response.list[30].main.temp - 273.15) * 1.80 + 32;
                 $(".temp4").text("Temp: " + tempFdeg4.toFixed(1) + "°F");
                 $(".humidity4").text("Humidity: " + response.list[30].main.humidity + "%");
 
                 var date5 = moment().add(5, 'days').format("l");
                 $(".date5").text(date5);
-                // $(".icon5")
+                var img5 = $("<img>")
+                img5.attr('src', "http://openweathermap.org/img/wn/" + response.list[38].weather[0].icon + ".png");
+                img5.appendTo("#icon5");
                 var tempFdeg5 = (response.list[38].main.temp - 273.15) * 1.80 + 32;
                 $(".temp5").text("Temp: " + tempFdeg5.toFixed(1) + "°F");
                 $(".humidity5").text("Humidity: " + response.list[38].main.humidity + "%");
@@ -185,6 +217,34 @@
             localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
         }
         
+        function clearInfo(){
+            $(".city").innerHTML = "";
+            $(".temp").innerHTML = "";
+            $(".humidity").innerHTML = "";
+            $(".wind").innerHTML = "";
+            $(".uv").innerHTML = "";
+            $(".date1").innerHTML = "";
+            $("#icon1").innerHTML = "";
+            $(".temp1").innerHTML = "";
+            $(".humidity1").innerHTML = "";
+            $(".date2").innerHTML = "";
+            $("#icon2").innerHTML = "";
+            $(".temp2").innerHTML = "";
+            $(".humidity2").innerHTML = "";
+            $(".date3").innerHTML = "";
+            $("#icon3").innerHTML = "";
+            $(".temp3").innerHTML = "";
+            $(".humidity3").innerHTML = "";
+            $(".date4").innerHTML = "";
+            $("#icon4").innerHTML = "";
+            $(".temp4").innerHTML = "";
+            $(".humidity4").innerHTML = "";
+            $(".date5").innerHTML = "";
+            $("#icon5").innerHTML = "";
+            $(".temp5").innerHTML = "";
+            $(".humidity5").innerHTML = "";
+        }
+
         function renderHistory(){
             var storedCities = JSON.parse(localStorage.getItem("cityHistory"));
 
@@ -199,8 +259,14 @@
                     var button = document.createElement("button");
                     button.textContent = city;
                     button.setAttribute("class", "list-group-item");
-                    // button.setAttribute("id", "previousCity");
+                    button.setAttribute("id", "previousCity");
                     listOfCities.appendChild(button);
+                    button.addEventListener("click", function(){
+                        console.log("hi");
+                        clearInfo();
+                        getMainWeather();
+                        getForecast();
+                    })
                 }
             }
         }
@@ -217,33 +283,14 @@
                 getMainWeather();
                 getForecast();
             });
+         
+        // })
         
-        $("list-group-item").click(function(){
-            event.preventDefault();
-            console.log("hi");
-            // function getMainWeather(){
-            // var yourCity = this.text();
-            // var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + yourCity + "&appid=2e81bb007230992d08ea9d996937aeda";
-            // var today = moment().format('l');
-        
-            // $.ajax({
-            //     url: queryURL,
-            //     method: "GET"
-            // })
-            // .then(function(response){
-            //     console.log(response);
-            //     $(".city").text(response.name + "  " + today);
-            //     var tempFdeg = (response.main.temp - 273.15) * 1.80 + 32;
-            //     $(".temp").text("Temperature: " + tempFdeg.toFixed(1) + "°F");
-            //     $(".humidity").text("Humidity: " + response.main.humidity + "%");
-            //     $(".wind").text("Wind Speed: "+ response.wind.speed + " MPH");
-            //     // uv index
-
-            //     });
-            // }
-            //     getMainWeather();
-            //     // getForecast();
-        });
+        // $("list-group-item").click(function(){
+        //     event.preventDefault();
+        //     console.log("hi");
+            
+        // });
 
 
 
