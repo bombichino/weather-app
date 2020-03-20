@@ -22,3 +22,12 @@ h1 {
 #forecast {
     margin: none;
 }
+
+.forecastInfo{
+    font-size: small;
+    text-align: left;
+}
+
+.bump{
+    margin-right: 20px;
+}

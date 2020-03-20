@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
     <title>Weather Dashboard</title>
 </head>
 <body>
@@ -12,14 +12,31 @@
     <div class="container" style="margin: 0px;">
       <div class="row">
         <div class="col-3" id="city-sidebar">
-            <div>form input city</div>
-            <div>city selection list</div>
+            <div>Search for a city:</div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button class="btn btn-outline-secondary" type="button" id="button-addon1">></button>
+                </div>
+                <input type="text" class="form-control" placeholder="Townsville" aria-label="Example text with button addon" aria-describedby="button-addon1" id="your-city">
+              </div>
+              
+            <!-- <div>city selection list</div> -->
+            <div class="card">
+                <ul class="list-group list-group-flush" id="city-search-history">
+                  <!-- <li class="list-group-item"></li> -->
+                </ul>
+              </div>
         </div>
         <div class="col-9" id="weather-dashboard">
           <div class="container"id="current-weather">
-            <div class="city-date"></div>
+            <div class="city"></div>
+            <br>
             <div class="temp"></div>
+            <br>
+            <div class="humidity"></div>
+            <br>
             <div class="wind"></div>
+            <br>
             <div class="uv"></div>
             <!-- <div class="row">
                 <p id="city-date">Today</p>
@@ -37,32 +54,202 @@
                 <p>UV Index: <span id="uv"></span></p>
             </div> -->
           </div>
+          <br>
           <div class="container" id="forecast">
             <div class="row">
-                <p>5-Day Forecast:</p>
+                <p id="forecast-heading">5-Day Forecast:</p>
             </div>
             <div class="row" id="weather-cards">
-                <card>tomorrow</card>
-          </div>
+                <div class="card bg-primary text-white text-center p-3 bump" >
+                    <blockquote class="blockquote mb-0">
+                        <div class="date1 forecastInfo">date</div>
+                        <div class="icon1">icon</div>
+                        <div class="temp1 forecastInfo">temp</div>
+                        <div class="humidity1 forecastInfo">humidity</div>
+                    </blockquote>
+                </div>
+                <div class="card bg-primary text-white text-center p-3 bump">
+                    <blockquote class="blockquote mb-0">
+                        <div class="date2 forecastInfo">date</div>
+                        <div class="icon2">icon</div>
+                        <div class="temp2 forecastInfo">temp</div>
+                        <div class="humidity2 forecastInfo">humidity</div>
+                    </blockquote>
+                </div>
+                <div class="card bg-primary text-white text-center p-3 bump">
+                    <blockquote class="blockquote mb-0">
+                        <div class="date3 forecastInfo">date</div>
+                        <div class="icon3">icon</div>
+                        <div class="temp3 forecastInfo">temp</div>
+                        <div class="humidity3 forecastInfo">humidity</div>
+                    </blockquote>
+                </div>
+                <div class="card bg-primary text-white text-center p-3 bump">
+                    <blockquote class="blockquote mb-0">
+                        <div class="date4 forecastInfo">date</div>
+                        <div class="icon4">icon</div>
+                        <div class="temp4 forecastInfo">temp</div>
+                        <div class="humidity4 forecastInfo">humidity</div>
+                    </blockquote>
+                </div>
+                <div class="card bg-primary text-white text-center p-3">
+                    <blockquote class="blockquote mb-0">
+                        <div class="date5 forecastInfo">date</div>
+                        <div class="icon5">icon</div>
+                        <div class="temp5 forecastInfo">temp</div>
+                        <div class="humidity5 forecastInfo">humidity</div>
+                    </blockquote>
+                </div>
+            </div>
             </div>
           </div>  
         </div>
      </div>  
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
-      "q=Bujumbura,Burundi&appid=" + "2e81bb007230992d08ea9d996937aeda"
+        function getMainWeather(){
+            var yourCity = $("#your-city").val();
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + yourCity + "&appid=2e81bb007230992d08ea9d996937aeda";
+            var today = moment().format('l');
         
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        })
-        .then(function(response){
-            console.log(response);
-            
-        })
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+            .then(function(response){
+                console.log(response);
+                $(".city").text(response.name + "  " + today);
+                var tempFdeg = (response.main.temp - 273.15) * 1.80 + 32;
+                $(".temp").text("Temperature: " + tempFdeg.toFixed(1) + "°F");
+                $(".humidity").text("Humidity: " + response.main.humidity + "%");
+                $(".wind").text("Wind Speed: "+ response.wind.speed + " MPH");
+                // uv index
+
+                });
+            }
+        function getForecast(){
+            var yourCity = $("#your-city").val();
+            var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + yourCity + "&appid=2e81bb007230992d08ea9d996937aeda";
+            var today = moment().format('l');
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+
+            .then(function(response){
+                console.log(response);
+                var date1 = moment().add(1, 'days').format("l");
+                $(".date1").text(date1);
+                // $(".icon1")
+                var tempFdeg1 = (response.list[6].main.temp - 273.15) * 1.80 + 32;
+                $(".temp1").text("Temp: " + tempFdeg1.toFixed(1) + "°F");
+                $(".humidity1").text("Humidity: " + response.list[6].main.humidity + "%");
+
+                var date2 = moment().add(2, 'days').format("l");
+                $(".date2").text(date2);
+                // $(".icon2")
+                var tempFdeg2 = (response.list[14].main.temp - 273.15) * 1.80 + 32;
+                $(".temp2").text("Temp: " + tempFdeg2.toFixed(1) + "°F");
+                $(".humidity2").text("Humidity: " + response.list[14].main.humidity + "%");
+
+                var date3 = moment().add(3, 'days').format("l");
+                $(".date3").text(date3);
+                // $(".icon3")
+                var tempFdeg3 = (response.list[22].main.temp - 273.15) * 1.80 + 32;
+                $(".temp3").text("Temp: " + tempFdeg3.toFixed(1) + "°F");
+                $(".humidity3").text("Humidity: " + response.list[22].main.humidity + "%");
+
+                var date4 = moment().add(4, 'days').format("l");
+                $(".date4").text(date4);
+                // $(".icon4")
+                var tempFdeg4 = (response.list[30].main.temp - 273.15) * 1.80 + 32;
+                $(".temp4").text("Temp: " + tempFdeg4.toFixed(1) + "°F");
+                $(".humidity4").text("Humidity: " + response.list[30].main.humidity + "%");
+
+                var date5 = moment().add(5, 'days').format("l");
+                $(".date5").text(date5);
+                // $(".icon5")
+                var tempFdeg5 = (response.list[38].main.temp - 273.15) * 1.80 + 32;
+                $(".temp5").text("Temp: " + tempFdeg5.toFixed(1) + "°F");
+                $(".humidity5").text("Humidity: " + response.list[38].main.humidity + "%");
+            });
+        }
+        var cityHistory = []
+        function storeCity(){
+            var yourCity = $("#your-city").val();
+            cityHistory.splice(0, 0, yourCity);
+            console.log(cityHistory);
+            localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
+        }
         
+        function renderHistory(){
+            var storedCities = JSON.parse(localStorage.getItem("cityHistory"));
+
+            if (storedCities !== null) {
+                var citiesList = storedCities;
+                document.querySelector("#city-search-history").innerHTML = "";
+
+                for (var i = 0; i < citiesList.length; i++) {
+                    var city = citiesList[i];
+                    var listOfCities = document.querySelector("#city-search-history");
+
+                    var button = document.createElement("button");
+                    button.textContent = city;
+                    button.setAttribute("class", "list-group-item");
+                    // button.setAttribute("id", "previousCity");
+                    listOfCities.appendChild(button);
+                }
+            }
+        }
+
+        $(document).ready(function(){
+            renderHistory()
+         });
+    
+
+        $("#button-addon1").on("click", function(){
+                var cityHistory = cityHistory;
+                storeCity();
+                renderHistory();
+                getMainWeather();
+                getForecast();
+            });
+        
+        $("list-group-item").click(function(){
+            event.preventDefault();
+            console.log("hi");
+            // function getMainWeather(){
+            // var yourCity = this.text();
+            // var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + yourCity + "&appid=2e81bb007230992d08ea9d996937aeda";
+            // var today = moment().format('l');
+        
+            // $.ajax({
+            //     url: queryURL,
+            //     method: "GET"
+            // })
+            // .then(function(response){
+            //     console.log(response);
+            //     $(".city").text(response.name + "  " + today);
+            //     var tempFdeg = (response.main.temp - 273.15) * 1.80 + 32;
+            //     $(".temp").text("Temperature: " + tempFdeg.toFixed(1) + "°F");
+            //     $(".humidity").text("Humidity: " + response.main.humidity + "%");
+            //     $(".wind").text("Wind Speed: "+ response.wind.speed + " MPH");
+            //     // uv index
+
+            //     });
+            // }
+            //     getMainWeather();
+            //     // getForecast();
+        });
+
+
+
+
+
+
 
 // GIVEN a weather dashboard with form inputs
 // WHEN I search for a city
@@ -86,7 +273,7 @@
             // return results
         // takeWeatherResultsAndBuildHTML ( weather obj)
             // build html elements from results
-            var $img = $("<img>").attr({alt: weatherResults.weather.main +" icon", src:"http://openweathermap.org/img/wn/" + weatherResults.weather.icon + "@2x.png"})
+            // var $img = $("<img>").attr({alt: weatherResults.weather.main +" icon", src:"http://openweathermap.org/img/wn/" + weatherResults.weather.icon + "@2x.png"})
         // read local storage for city buttons
         // click events:
             // add click event to form city input
